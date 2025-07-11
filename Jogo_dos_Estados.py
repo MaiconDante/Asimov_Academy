@@ -19,11 +19,14 @@ questions = {
 }
 
 hits = 0
+answer = 1
 print("As perguntas irão INICIAR:")
+print("Serão no total |5| perguntas")
 time.sleep(2)
 
 for state, capital in questions.items():
-    response = input(f"\nQual a capital do Estado do(a) {state} R: ").lower()
+    response = input(f"\nPergunta {answer} -> Qual a capital do Estado do(a) {state} R: ").lower()
+    answer += 1
     if response == capital.lower():
         print("-" * 50)
         print("Você acertou !!!")
@@ -34,28 +37,35 @@ for state, capital in questions.items():
         print("Você errou !!!")
         print("-" * 50)
 
-    exit = input("\nDeseja continuar? Digite S para SIM ou N para NÃO R: ").lower()
-    if exit == "s":
+    if answer <= 5:
+        exit = input("\nDeseja continuar? Digite S para SIM ou N para NÃO R: ").lower()
+        if exit == "s" and answer <= 5:
+            print("\nVamos para a próxima pergunta...")
+            time.sleep(2)
+            continue
+        elif exit == "n":
+            print("*" * 80)
+            print(f"Você acertou {hits} de {len(questions)} perguntas.")
+            print("*" * 80)
+            break
+        else:
+            while True:
+                exit = input("\nDigite apenas S para SIM ou N para NÃO R: ").lower()
+                if exit == "s" and answer <= 5:
+                    break 
+                elif exit == "n":
+                    print("*" * 80)
+                    print(f"Você acertou {hits} de {len(questions)} perguntas.")
+                    print("*" * 80)
+                    print("\n")
+                    sys.exit()
+                else:
+                    print("\nOpção inválida! Digite apenas 'S' para SIM ou 'N' para NÃO.")
         print("\nVamos para a próxima pergunta...")
-        time.sleep(2)
-        continue
-    elif exit == "n":
+    else:
         print("*" * 80)
         print(f"Você acertou {hits} de {len(questions)} perguntas.")
         print("*" * 80)
-        break
-    else:
-        while True:
-            exit = input("\nDigite apenas S para SIM ou N para NÃO R: ").lower()
-            if exit == "s":
-                break 
-            elif exit == "n":
-                print("*" * 80)
-                print(f"Você acertou {hits} de {len(questions)} perguntas.")
-                print("*" * 80)
-                print("\n")
-                sys.exit()
-            else:
-                print("\nOpção inválida! Digite apenas 'S' para SIM ou 'N' para NÃO.")
-    print("\nVamos para a próxima pergunta...")
-    time.sleep(2)
+        print("\n")
+        sys.exit()
+        time.sleep(2)
